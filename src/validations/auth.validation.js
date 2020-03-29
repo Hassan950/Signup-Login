@@ -8,13 +8,17 @@ exports.signup = {
     password: Joi.string()
       .required()
       .min(8),
-    passwordConfirm: Joi.string().required(),
+    passwordConfirm: Joi.any()
+      .valid(Joi.ref('password'))
+      .required()
+      .messages({
+        'any.only': 'Password confirmation must match password'
+      }),
     username: Joi.string()
       .required()
       .min(5)
       .max(30),
-    displayName: Joi.string()
-      .required()
+    displayName: Joi.string().required()
   })
 };
 
@@ -25,6 +29,5 @@ exports.login = {
       .email(),
     password: Joi.string()
       .required()
-      .min(8)
   })
 };

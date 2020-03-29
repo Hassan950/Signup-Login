@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const moment = require('moment');
 
 const userSchema = mongoose.Schema(
   {
@@ -31,18 +30,6 @@ const userSchema = mongoose.Schema(
       required: [true, 'Please enter your password!'],
       minlength: [8, 'Password is very short!'],
       select: false
-    },
-    passwordConfirm: {
-      type: String,
-      required: [true, 'Please confirm your password!'],
-      minlength: [8, 'Please confirm your password!'],
-      select: false,
-      validate: {
-        validator: function(el) {
-          return el === this.password;
-        },
-        message: 'Passwords are not the same'
-      }
     }
   }
 );
@@ -53,7 +40,6 @@ userSchema.pre('save', async function(next) {
 
   this.password = await bcrypt.hash(this.password, 8);
 
-  this.passwordConfirm = undefined; //we do not want password confirm to be saved in the database
   next();
 });
 
