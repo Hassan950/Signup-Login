@@ -14,7 +14,6 @@ const errorConverter = (err, req, res, next) => {
   if (error.name === 'JsonWebTokenError') error = handleJWTError(error);
   if (error.name === 'TokenExpiredError') error = handleJWTExpiredError(error);
   if (error.name === 'CastError') error = handleCastErrorDB(error);
-  if (error.name === 'InternalOAuthError') error = handleOAuthError(error);
   if (!(error instanceof AppError)) {
     const statusCode = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
     const message = error.message || httpStatus[statusCode];
@@ -23,32 +22,32 @@ const errorConverter = (err, req, res, next) => {
   next(error);
 };
 
-const handleOAuthError = err => {
-  return new AppError(err.message, err.oauthError.statusCode);
-};
 
 const handleCastErrorDB = err => {
   const message = `Invalid ${err.path}: ${err.value}.`;
-  return new AppError(message, 400);
+  return new AppError(message, httpStatus.BAD_REQUEST);
 };
 
 const handleJWTError = err =>
-  new AppError('Invalid Token. Please log in again', 401);
+  new AppError('Invalid Token. Please log in again', httpStatus.UNAUTHORIZED);
 
 const handleJWTExpiredError = err =>
-  new AppError('Your token has expired! Please log in again.', 401);
+  new AppError(
+    'Your token has expired! Please log in again.',
+    httpStatus.UNAUTHORIZED
+  );
 
 const handleValidationErrorDB = err => {
   const errors = Object.values(err.errors).map(el => el.message);
 
   const message = `Invalid input data. ${errors.join('. ')}`;
-  return new AppError(message, 400);
+  return new AppError(message, httpStatus.BAD_REQUEST);
 };
 
 const handleDuplicateFieldsDB = err => {
-  const [ field, value ] = Object.entries(err.keyValue)[0]
+  const [field, value] = Object.entries(err.keyValue)[0];
   const message = `${value} already exists as ${field}.`;
-  return new AppError(message, 400);
+  return new AppError(message, httpStatus.BAD_REQUEST);
 };
 
 // eslint-disable-next-line no-unused-vars
