@@ -19,7 +19,7 @@ module.exports = {
     '@nuxtjs/auth'
   ],
   axios: {
-    baseURL: 'http://127.0.0.1:3333/api/v1'
+    baseURL: 'https://stormy-shelf-01579.herokuapp.com/api/v1'
   },
   
   auth: {
