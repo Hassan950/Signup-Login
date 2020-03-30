@@ -7,7 +7,9 @@ exports.signup = {
       .email(),
     password: Joi.string()
       .required()
-      .min(8),
+      .min(8)
+      .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
+      .message('Password should at least have one letter and one number'),
     passwordConfirm: Joi.any()
       .valid(Joi.ref('password'))
       .required()
