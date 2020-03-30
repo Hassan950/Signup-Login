@@ -3,7 +3,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'nuxt-auth',
+    title: 'Small Site',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -26,8 +26,8 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'http://127.0.0.1:3333/api/v1/auth/login', method: 'post', propertyName: 'token' },
-          user: { url: 'http://127.0.0.1:3333/api/v1/me', method: 'get', propertyName: false },
+          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
+          user: { url: '/me', method: 'get', propertyName: false },
           logout: false
         }
       }

@@ -2,7 +2,7 @@
   <nav class="navbar is-light">
     <div class="container">
       <div class="navbar-brand">
-        <nuxt-link class="navbar-item" to="/">Nuxt Auth</nuxt-link>
+        <nuxt-link class="navbar-item" to="/">Home</nuxt-link>
         <button class="button navbar-burger">
           <span></span>
           <span></span>
@@ -13,7 +13,7 @@
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable" v-if="isAuthenticated">
             <a class="navbar-link">
-              {{ loggedInUser.username }}
+              Hello,&nbsp;<strong>{{ loggedInUser.displayName }}</strong>
             </a>
             <div class="navbar-dropdown">
               <nuxt-link class="navbar-item" to="/profile">My Profile</nuxt-link>
